@@ -1,0 +1,497 @@
+a = 17; b = 5
+print(a+b)
+print(a-b)
+print(a*b)
+print(a/b)
+print(a//b)
+print(a%b)
+
+toeic_now = 675; toeic_goal = 850
+print(f"현재 {toeic_now}점, 목표 {toeic_goal}점, 필요한 상승폭은 {toeic_goal - toeic_now}점입니다")
+
+text = "Python for Data Analysis"
+print(len(text))
+print(text[0:6])
+print(text[-8:])
+print(text.lower())
+
+nums = [12, 7, 25, 3, 18]
+print(nums[0], nums[-1])
+print(nums[1:4])
+print(sum(nums), max(nums), min(nums))
+print(sorted(nums))
+
+nums.append(30)
+a = sum(nums)/len(nums)
+print(f"평균은 {a:.1f}점입니다")
+
+me = {"name": "본인이름", "major": "수학", "cert": ["ADsP", "SQLD"]}
+
+me["TOEIC"] = 675
+me["cert"].append("컴활2급")
+print(me)
+#ADsP가 나온다
+print(me["cert"][0])
+
+toeic = 675
+if toeic >= 800:
+    print("목표달성")
+elif toeic >= 700:
+    print("거의 다 왔다")
+else:
+    print("더 노력하자")
+
+count = 0
+for n in range(11):
+        count += n
+print(count)
+
+count = 0
+nums = [12, 7, 25, 3, 18, 30]
+for n in nums:
+    if n > 15:
+        count += 1
+print(count)
+
+big_nums = [n for n in nums if n > 15]
+print(big_nums)
+
+students = [
+    {"name": "민수", "score": 85},
+    {"name": "지은", "score": 90},
+    {"name": "하준", "score": 78},
+]
+
+result = [s["name"] for s in students if s["score"] >= 80]
+print(result)
+
+def grade(score, pass_line = 60):
+     if score >= pass_line:
+          return "합격"
+     return "불합격"
+
+print(grade(78))
+print(grade(59, 40))
+
+def stats(nums):
+     return min(nums), max(nums), sum(nums) / len(nums)
+
+print(stats([10, 20, 30]))
+
+result = [s["name"] for s in students if s["score"] >= 80]
+print(result)
+
+def even_odd(n):
+     if n % 2 == 0:
+          return "짝수"
+     return "홀수"
+print(even_odd(7))
+print(even_odd(10))
+
+def mean(nums):
+     return sum(nums) / len(nums)
+print(f"{mean([85, 90, 78, 92]):.1f}")
+
+sales = [
+     {"month": "1월", "amount": 520},
+     {"month": "2월", "amount": 480},
+     {"month": "3월", "amount": 350},
+     {"month": "4월", "amount": 410},
+     {"month": "5월", "amount": 600},
+]
+
+with open("sales.csv", "w", encoding = "utf-8") as f:
+     f.write("month, amount\n")
+     for s in sales:
+          f.write(f"{s["month"]}, {s["amount"]}\n")
+
+def low_months(data, line):
+     result = []
+     for s in data:
+        if s["amount"] < line:
+          result.append(s["month"])
+     return result
+
+def low_months(data, line):
+     return [s["month"] for s in data if s["amount"] < line]
+
+print(low_months(sales, 450))
+
+#값이 저장되지 않는다
+
+with open("memo.txt", "w", encoding = "utf-8") as f:
+     f.write("간달프\n")
+     f.write("토익 850")
+
+with open("memo.txt", "r", encoding = "utf-8") as f:
+     text = f.read()
+print(text)
+
+# (a)NameError
+# (b)KeyError
+# (c)TypeError
+
+import math
+r = 5
+print(f"{math.pi * r ** 2:.2f}") 
+
+def low_months(data, line):
+     result = []
+     for s in data:
+          if s["amount"] < line:
+               result.append(s["month"])
+     return result
+
+print(low_months(sales, 450))
+
+import pandas as pd
+
+df = pd.DataFrame(sales)
+print(df)
+
+df = pd.read_csv("sales.csv")
+
+df.info()
+df.describe()
+
+df = pd.DataFrame({
+     "month": ["1월", "2월", "3월", "4월", "5월", "6월"],
+     "region": ["서울", "서울", "부산", "부산", "서울", "부산"],
+     "amount": [520, 480, 350, 410, 600, 390],
+})
+
+print(df.head(3)) #1, 2, 3월의 데이터 출력
+print(df.shape) #6행3열
+df.info() #6entries, 3columns, str, str, int64
+print(df.describe()) #amount에 관한 통계
+
+print(f"평균: {df["amount"].mean()}\n최댓값: {df["amount"].max()}\n최솟값: {df["amount"].min()}\n합계: {df["amount"].sum()}")
+
+df["amount_up"] = df["amount"]*1.1
+print(df.head())
+
+print(df["amount"] >= 450) #진위여부
+
+print(df[df["amount"] >= 450])
+
+print(df[df["month"].isin(["1월", "3월"])])
+
+print(df[["month", "amount"]])
+
+print(df[df["region"] == "부산"])
+
+print(df[(df["region"] == "서울") & (df["amount"] >= 500)])
+
+sorted_df = df.sort_values("amount", ascending = False)
+
+print(sorted_df[["month", "amount"]].head(3))
+
+print(df.loc[df["amount"] < 400, "month"].tolist())
+
+#&가 먼저 계산됨
+
+df2 = pd.DataFrame({
+     "month": ["1월", "2월", "3월", "1월", "2월", "3월", "1월", "2월", "3월"],
+     "region": ["서울", "서울", "서울", "부산", "부산", "부산", "대구", "대구", "대구"],
+     "amount": [520, 480, 350, 300, 310, 280, 410, 400, 420],
+     "visitors": [1000, 950, 900, 700, 690, 720, 800, 790, 810],
+})
+
+print(df2.groupby("region")["amount"].mean())
+
+print(df2.groupby("month")["amount"].sum())
+
+print(df2.groupby("region").agg(
+     total = ("amount", "sum"),
+     avg_visitors = ("visitors", "mean"),
+).reset_index())
+
+df2["per_visitor"] = df2["amount"] / df2["visitors"]
+result = df2.groupby("region")["per_visitor"].mean()
+print(result.sort_values(ascending = False))
+
+#방문자 수가 떨어졌는지 보고 안 떨어졌으면 per_visitor이 떨어진것
+
+import numpy as np
+
+df5 = pd.DataFrame({
+     "id": [1, 2, 3, 3, 4, 5, 6],
+     "age": [25, np.nan, 31, 31, 28, 200, 35],
+     "salary": [300, 320, np.nan, np.nan, 350, 310, 330],
+})
+
+print(df5.isna().sum())
+
+print(df5.duplicated().sum())
+df5 = df5.drop_duplicates()
+
+df5["age"] = df5["age"].fillna(df5["age"].median())
+df5["salary"] = df5["salary"].fillna(df5["salary"].mean())
+
+print(df5.describe())
+print(df5.loc[df5["age"] >= 100])
+
+#중앙값으로 대체. 월급 정보를 쓰고 싶어서.
+
+#중앙값은 이상치의 영향을 받을 확률이 적어서 괜찮지만 평균은 200으로 인해 올랐을 것이다.
+
+orders = pd.DataFrame({
+     "order_id": [1,2,3,4,5],
+     "customer_id": [101, 102, 101, 104, 103],
+     "amount": [50, 80, 30, 60, 40],
+})
+
+customers = pd.DataFrame({
+     "customer_id": [101, 102, 103],
+     "name": ["민수", "지은", "하준"],
+     "city": ["서울", "부산", "서울"],
+})
+
+merged = pd.merge(orders, customers, on = "customer_id", how = "left")
+print([len(orders), len(merged)])
+
+inner_merged = pd.merge(orders, customers, on = "customer_id", how = "inner")
+print(merged)
+print(inner_merged)
+#inner는 104가 없다.
+
+print(merged.groupby("city")["amount"].sum())
+
+print(merged[merged["city"].isna()])
+
+q1 = pd.DataFrame({"month": ["1월", "2월"], "amount": [100, 200]})
+q2 = pd.DataFrame({"month": ["3월", "4월"], "amount": [150, 250]})
+
+q3 = pd.concat([q1, q2], ignore_index = True)
+print(sum(q3["amount"]))
+
+#orders에 101이 2번, customers에 101이 2번이므로 2*2 = 4개가 되어 매출이 늘어난다.
+
+df6 = pd.DataFrame({
+     "date": ["2026-01-05", "2026-01-20", "2026-02-10", "2026-02-25",
+              "2026-03-08", "2026-03-22", "2026-04-02"],
+     "amount": [100, 120, 90, 110, 60, 70, 80],
+})
+
+print(df6["date"].dtype)
+df6["date"] = pd.to_datetime(df6["date"])
+print(df6["date"].dtype)
+
+df6["month"] = df6["date"].dt.month
+print(df6.groupby("month")["amount"].sum())
+#3월에 70으로 가장 많이 떨어졌다.
+
+print(df6[df6["date"] >= "2026-02-15"])
+
+print((df6["date"].max() - df6["date"].min()).days)
+
+df6["weekday"] = df6["date"].dt.dayofweek
+print(df6.groupby("weekday")["amount"].mean())
+
+#3월에 거의 반으로 줄었지만 4월엔 데이터가 하나뿐이라 준 것처럼 보이지만 늘었다.
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df7 = pd.DataFrame({
+     "month": [1,2,3,4,5,6],
+     "seoul": [520, 480, 350, 340, 360, 370],
+     "busan": [300, 310, 280, 290, 300, 310],
+})
+
+plt.plot(df7["month"], df7["seoul"], marker = "o")
+plt.title("Seoul's Income")
+plt.xlabel("month")
+plt.ylabel("seoul")
+plt.grid(True)
+#plt.show()
+
+plt.plot(df7["month"], df7["seoul"], label = "seoul")
+plt.plot(df7["month"], df7["busan"], label = "busan")
+plt.legend()
+#plt.show()
+
+plt.bar(["seoul", "busan"], [df7["seoul"].mean(), df7["busan"].mean()])
+#plt.show()
+
+fig, axes = plt.subplots(1, 2, figsize = (10,4))
+
+axes[0].plot(df7["month"], df7["seoul"])
+axes[0].set_title("Seoul")
+axes[0].set_ylim([250, 550])
+axes[1].plot(df7["month"], df7["busan"])
+axes[1].set_title("Busan")
+axes[1].set_ylim([250, 550])
+
+plt.tight_layout()
+#plt.show()
+
+#3월에 확 떨어진다. 부산도 3월의 하락폭이 좁긴 하지만 다른 달엔 모두 상승한 것에 비해 하락한 것으로 봐선 3월에 무언가 있었다고 추측할 수 있다.
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df8 = pd.DataFrame({
+     "month": [1,2,3,1,2,3,1,2,3],
+     "region": ["Seoul", "Seoul", "Seoul", "Busan", "Busan", "Busan", "Daegu", "Daegu", "Daegu"],
+     "amount": [520, 480, 350, 300, 310, 280, 410, 400, 420],
+     "visitors": [1000, 950, 900, 700, 690, 720, 800, 790, 810],
+})
+
+sns.lineplot(data = df8, x = "month", y = "amount", hue = "region", marker = "o")
+plt.title("Income")
+#plt.show()
+
+sns.barplot(data = df8, x = "region", y = "amount")
+#plt.show()
+
+sns.scatterplot(data = df8, x = "visitors", y = "amount", hue = "region")
+#plt.show()
+#예외도 있지만 기본적으로 그렇다.
+
+sns.heatmap(df8[["amount", "visitors"]].corr(), annot = True, cmap = "coolwarm")
+#plt.show()
+#0.86
+
+melted_df7 = df7.melt(id_vars = "month", var_name = "region", value_name = "amount")
+sns.lineplot(data = melted_df7, x = "month", y = "amount", hue = "region")
+#plt.show()
+#간단해졌다.
+
+#지역과 방문자의 수가 비례하기 때문에 매출과도 당연히 비례한다고 볼 수 있다.
+
+import pandas as pd
+
+df = pd.DataFrame({
+     "month": [1,1,1,1,2,2,2,2,3,3,3,3],
+     "region": ["Seoul", "Seoul", "Busan", "Busan"] * 3,
+     "category": ["A", "B", "A", "B"] * 3,
+     "orders": [100, 80, 60, 50, 98, 78, 62, 48, 97, 40, 61, 49],
+     "amount": [500, 400, 300, 250, 490, 390, 310, 240, 485, 120, 305, 245],
+})
+
+monthly = df.groupby("month")["amount"].sum()
+print(monthly)
+print(monthly.diff())
+print(monthly.pct_change())
+#2월에서 3월 갈 때
+
+pv = df.pivot_table(
+     index = "region",
+     columns = "month",
+     values = "amount",
+     aggfunc = "sum",
+)
+print(pv)
+#부산은 변화가 없고 서울에 몰려있다.
+
+pv = df.pivot_table(
+     index = "category",
+     columns = "month",
+     values = "amount",
+     aggfunc = "sum",
+)
+print(pv)
+#B에 하락이 몰려있다.
+
+pv = df.pivot_table(
+     index = ["region", "category"],
+     columns = "month",
+     values = "amount",
+     aggfunc = "sum",
+)
+pv["change"] = pv[3] - pv[2]
+total_change = pv["change"].sum()
+pv["share"] = pv["change"] / total_change
+print(pv.sort_values("change"))
+#서울B가 98%
+
+df["per_order"] = df["amount"] / df["orders"]
+suspect = df[(df["region"] == "Seoul") & (df["category"] == "B")]
+print(suspect[["orders", "per_order"]])
+#주문수량이 반토막 났고 주문당 가격도 0.6배가 됐다.
+
+#3월에 전월 대비 300 정도의 매출하락이 있었다.
+#서울 지역의 B 상품이 대부분의 하락에 기여하고 있었다.
+#주문수량과 주문 당 매출이 모두 하락한 것으로 보인다.
+#서울은 트랜드가 빨리 반영되는 만큼 유행이 일찍 꺼졌고 부산은 아직 진행 중이라는 가설을 세울 수 있다.
+
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+seoul_b_feb = [78, 80, 77, 79, 76, 81, 78, 79]
+seoul_b_mar = [41, 38, 40, 43, 39, 42, 40, 37]
+
+busan_b_feb = [48, 50, 47, 49, 51, 48, 50, 49]
+busan_b_mar = [49, 47, 50, 48, 51, 49, 48, 50]
+
+t, p = stats.ttest_ind(seoul_b_feb, seoul_b_mar, equal_var = False)
+print(f"t = {t:.2f}, p = {p:.17f}")
+#귀무가설은 "2월과 3월의 평균이 같다."
+#p-value가 매우 작으므로 0.05보다 작아 귀무가설을 기각할 수 있다.
+#평균은 같지 않다.
+
+t, p = stats.ttest_ind(busan_b_feb, busan_b_mar, equal_var = False)
+print(f"t = {t:.2f}, p = {p:.4f}")
+#p-value가 1로 평균은 같다. 고로 변화가 있었다고 할 수 없다.
+
+u, p = stats.mannwhitneyu(seoul_b_feb, seoul_b_mar)
+print(f"u = {u:.2f}, p = {p:.4f}")
+#1번은 p-value가 소수점 15자리까지 가야 했는데 지금은 4자리만에 나왔다.
+
+x = [10, 20, 30, 40, 50, 60, 70]
+y = [12, 25, 29, 44, 48, 65, 300]
+
+r, p = stats.pearsonr(x, y)
+print(f"r = {r:.2f}, p = {p:.4f}")
+rho, p = stats.spearmanr(x, y)
+print(f"rho = {rho:.2f}, p = {p:.4f}")
+
+x2 = x[:-1]
+y2 = y[:-1]
+
+r, p = stats.pearsonr(x2, y2)
+print(f"r = {r:.2f}, p = {p:.4f}")
+rho, p = stats.spearmanr(x2, y2)
+print(f"rho = {rho:.2f}, p = {p:.4f}")
+
+#spearmanr가 더 많이 변함
+
+table = pd.DataFrame(
+     {"A": [60,40], "B": [30, 70]},
+     index = ["Seoul", "Busan"],
+)
+chi2, p, dof, expected = stats.chi2_contingency(table)
+print(f"chi2 = {chi2:.2f}, p = {p:.4f}, dof = {dof}")
+
+import pandas as pd
+import statsmodels.formula.api as smf
+
+df9 = pd.DataFrame({
+     "ad": [10, 12, 15, 11, 18, 20, 14, 16, 22, 13, 19, 17],
+     "price": [100, 100, 95, 105, 95, 90, 100, 98, 90, 102, 92, 96],
+     "sales": [200, 215, 250, 205, 280, 300, 230, 255, 320, 215, 290, 265],
+     "region": ["Seoul"] * 6 + ["Busan"] * 6,
+})
+
+model = smf.ols("sales ~ ad", data = df9).fit()
+print(model.summary())
+#광고비가 1 늘면 매출이 10 증가
+
+model2 = smf.ols("sales ~ ad + price", data = df9).fit()
+print(model2.summary())
+#ad는 8.7로 줄었고 price는 -1.5가 나왔어. 가격이 오르면 매출이 떨어지는 게 할인하는 이유랑 비슷하지 않을까 싶어.
+
+print(df9[["ad", "price"]].corr())
+#-0.91인데 음의 상관관계인건가?
+
+model3 = smf.ols("sales ~ ad + price + C(region)", data = df9).fit()
+print(model3.summary())
+#부산 대비 서울이 4.3배라는 것 같아. 신뢰구간이 0을 포함하는데 무슨 의미인지는 모르겠어.
+
+print(model2.conf_int())
+#아깐 10이었는데 지금은 9.7~11.3이야. 뭐가 더 좋은지 잘 모르겠어.
+
+#광고비를 올려서 많은 사람들이 더 많이 샀느냐가 중요한 것 같은데 그 정보가 없어.
